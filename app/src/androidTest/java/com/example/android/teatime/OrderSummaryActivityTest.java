@@ -28,21 +28,17 @@ import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
 public class OrderSummaryActivityTest {
-    private static final String emailMessage = "I just ordered a delicious tea from TeaTime. Next time you are craving a tea, check them out!";
+    private static final String emailMessage = "Just For You!";
     @Rule
-    public IntentsTestRule<OrderSummaryActivity> mActivityRule = new IntentsTestRule<>(OrderSummaryActivity.class);
-
+    public IntentsTestRule<OrderSummaryActivity> mActivityRule = new IntentsTestRule<>(
+            OrderSummaryActivity.class);
     @Before
     public void stubAllExternalIntents() {
         intending(not(isInternal())).respondWith(new ActivityResult(Activity.RESULT_OK, null));
     }
-
     @Test
     public void clickSendEmailButton_SendsEmail() {
         onView(withId(R.id.send_email_button)).perform(click());
-        intended(allOf(
-                hasAction(Intent.ACTION_SENDTO),
-                hasExtra(Intent.EXTRA_TEXT, emailMessage)));
+        intended(allOf(hasAction(Intent.ACTION_SENDTO), hasExtra(Intent.EXTRA_TEXT, emailMessage)));
     }
-
 }
